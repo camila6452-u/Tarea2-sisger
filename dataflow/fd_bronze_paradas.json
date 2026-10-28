@@ -1,6 +1,9 @@
 {
 	"name": "fd_bronze_paradas",
 	"properties": {
+		"folder": {
+			"name": "bronce"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

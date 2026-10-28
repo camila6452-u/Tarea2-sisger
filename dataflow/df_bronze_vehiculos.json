@@ -1,6 +1,9 @@
 {
 	"name": "df_bronze_vehiculos",
 	"properties": {
+		"folder": {
+			"name": "bronce"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

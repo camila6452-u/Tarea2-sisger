@@ -1,6 +1,9 @@
 {
 	"name": "df_bronze_demanda_paradas",
 	"properties": {
+		"folder": {
+			"name": "bronce"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
