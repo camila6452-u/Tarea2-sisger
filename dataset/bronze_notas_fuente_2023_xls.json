@@ -17,13 +17,16 @@
 				"fileName": "operacion_2023.xlsx",
 				"folderPath": "datos_xls",
 				"fileSystem": "raw"
-			}
+			},
+			"firstRowAsHeader": true
 		},
 		"schema": [
 			{
+				"name": "elemento",
 				"type": "String"
 			},
 			{
+				"name": "detalle",
 				"type": "String"
 			}
 		]

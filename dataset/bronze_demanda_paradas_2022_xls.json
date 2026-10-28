@@ -17,31 +17,40 @@
 				"fileName": "operacion_2022.xlsx",
 				"folderPath": "datos_xls",
 				"fileSystem": "raw"
-			}
+			},
+			"firstRowAsHeader": true
 		},
 		"schema": [
 			{
+				"name": "fecha_servicio",
 				"type": "String"
 			},
 			{
+				"name": "cod_ruta",
 				"type": "String"
 			},
 			{
+				"name": "nro_parada",
 				"type": "String"
 			},
 			{
+				"name": "franja",
 				"type": "String"
 			},
 			{
+				"name": "estimacion_abordajes",
 				"type": "String"
 			},
 			{
+				"name": "estimacion_descensos",
 				"type": "String"
 			},
 			{
+				"name": "demanda_no_atendida",
 				"type": "String"
 			},
 			{
+				"name": "metodo",
 				"type": "String"
 			}
 		]

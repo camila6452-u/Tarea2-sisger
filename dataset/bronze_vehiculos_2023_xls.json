@@ -16,7 +16,8 @@
 				"type": "AzureBlobFSLocation",
 				"folderPath": "datos_xls",
 				"fileSystem": "raw"
-			}
+			},
+			"firstRowAsHeader": true
 		},
 		"schema": [
 			{
