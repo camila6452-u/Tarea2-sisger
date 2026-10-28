@@ -1,0 +1,45 @@
+{
+	"name": "bronze_vehiculos_2023_xls",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sa_transporte",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "bronzer/xls"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Vehiculos",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "datos_xls",
+				"fileSystem": "raw"
+			}
+		},
+		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			}
+		]
+	}
+}
