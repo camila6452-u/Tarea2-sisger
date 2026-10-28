@@ -11,7 +11,7 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "Notas_fuente",
+			"sheetName": "Vehiculos",
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "operacion_2022.xlsx",
@@ -22,11 +22,31 @@
 		},
 		"schema": [
 			{
-				"name": "elemento",
+				"name": "nro_bus",
 				"type": "String"
 			},
 			{
-				"name": "detalle",
+				"name": "placa",
+				"type": "String"
+			},
+			{
+				"name": "tipo_bus",
+				"type": "String"
+			},
+			{
+				"name": "capacidad",
+				"type": "String"
+			},
+			{
+				"name": "fecha_desde",
+				"type": "String"
+			},
+			{
+				"name": "fecha_hasta",
+				"type": "String"
+			},
+			{
+				"name": "estado",
 				"type": "String"
 			}
 		]
