@@ -57,7 +57,9 @@
 				"          Severidad = upper(trim(Severidad)),",
 				"          Descripcion = trim(Descripcion)) ~> derivedColumn1",
 				"derivedColumn1 derive(VehiculoId = iif(isNull(VehiculoId) || trim(VehiculoId) == '', toString(null()), upper(trim(VehiculoId)))) ~> derivedColumn2",
-				"derivedColumn2 derive() ~> derivedColumn3",
+				"derivedColumn2 derive(FechaHoraInicio = toTimestamp(trim(FechaHoraInicio), 'dd/MM/yyyy HH:mm'),",
+				"          FechaHoraFin = toTimestamp(trim(FechaHoraFin), 'dd/MM/yyyy HH:mm'),",
+				"          FechaHoraRegistro = coalesce(toDate(trim(FechaHoraRegistro), 'dd/MM/yyyy'), toDate(trim(FechaHoraRegistro), 'yyyy-MM-dd'))) ~> derivedColumn3",
 				"derivedColumn3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -78,7 +80,17 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          IncidenteId,",
+				"          TipoIncidente,",
+				"          Severidad,",
+				"          FechaHoraInicio,",
+				"          FechaHoraFin,",
+				"          FechaHoraRegistro,",
+				"          VehiculoId,",
+				"          Descripcion",
+				"     )) ~> sink1"
 			]
 		}
 	}

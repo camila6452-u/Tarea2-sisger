@@ -199,10 +199,12 @@
 				"          AnioFuente,",
 				"          IncidenteId,",
 				"          TipoIncidente,",
+				"          Severidad = union1@Severidad,",
 				"          FechaHoraInicio,",
 				"          FechaHoraFin,",
 				"          FechaHoraRegistro,",
-				"          VehiculoId",
+				"          VehiculoId,",
+				"          Descripcion = union1@Descripcion",
 				"     )) ~> sink1"
 			]
 		}
