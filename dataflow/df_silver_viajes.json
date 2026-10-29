@@ -26,13 +26,13 @@
 			],
 			"transformations": [
 				{
-					"name": "filter1"
-				},
-				{
 					"name": "derivedColumn1"
 				},
 				{
 					"name": "derivedColumn2"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -53,8 +53,7 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
-				"source1 filter(instr(trim(ViajeId), '-') == 0) ~> filter1",
-				"filter1 derive(ViajeId = trim(ViajeId),",
+				"source1 derive(ViajeId = trim(ViajeId),",
 				"          ValidacionesTarjeta = toInteger(trim(ValidacionesTarjeta)),",
 				"          KmRecorridos = toDecimal(replace(trim(KmRecorridos), ',', '.'), 7, 2),",
 				"          EstadoViaje = upper(trim(EstadoViaje))) ~> derivedColumn1",
@@ -62,7 +61,8 @@
 				"          VehiculoId = concat('V-', lpad(regexReplace(trim(VehiculoId), '[^0-9]', ''), 3, '0')),",
 				"          RutaHistoricaId = concat('RH-', lpad(regexReplace(trim(RutaHistoricaId), '[^0-9]', ''), 2, '0'), iif(in([7, 12], toInteger(regexReplace(trim(RutaHistoricaId), '[^0-9]', ''))), '-OLD', '')),",
 				"          AnioFuente = concat('RH-', lpad(regexReplace(trim(RutaHistoricaId), '[^0-9]', ''), 2, '0'), iif(in([7, 12], toInteger(regexReplace(trim(RutaHistoricaId), '[^0-9]', ''))), '-OLD', ''))) ~> derivedColumn2",
-				"derivedColumn2 sink(allowSchemaDrift: true,",
+				"derivedColumn2 filter(instr(trim(ViajeId), '-') == 0 && !isNull(toString(byName('ValidacionesTarjeta')))) ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          AnioFuente as integer,",
@@ -90,9 +90,6 @@
 				"          RutaHistoricaId,",
 				"          VehiculoId,",
 				"          FechaServicio,",
-				"          HoraProgramada,",
-				"          HoraSalida,",
-				"          HoraLlegada,",
 				"          ValidacionesTarjeta,",
 				"          KmRecorridos,",
 				"          EstadoViaje",
