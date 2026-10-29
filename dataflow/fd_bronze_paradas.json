@@ -56,6 +56,15 @@
 					"name": "select3"
 				},
 				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
+				},
+				{
 					"name": "union1"
 				}
 			],
@@ -135,7 +144,8 @@
 				"          Longitud = longitud,",
 				"          VigenciaDesde = fecha_desde,",
 				"          VigenciaHasta = fecha_hasta,",
-				"          Estado = estado",
+				"          Estado = estado,",
+				"          CodigoPublicado = nro_parada",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
@@ -151,7 +161,10 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select3",
-				"select1, source2, select2, select3 union(byName: true)~> union1",
+				"select1 derive(CodigoPublicado = toString(null())) ~> derivedColumn1",
+				"select2 derive(CodigoPublicado = toString(null())) ~> derivedColumn2",
+				"select3 derive(CodigoPublicado = toString(null())) ~> derivedColumn3",
+				"source2, derivedColumn1, derivedColumn2, derivedColumn3 union(byName: true)~> union1",
 				"union1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -173,19 +186,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError',",
-				"     mapColumn(",
-				"          AnioFuente,",
-				"          ParadaHistoricaId,",
-				"          CodigoPublicado,",
-				"          NombreParada,",
-				"          Zona,",
-				"          Latitud,",
-				"          Longitud,",
-				"          VigenciaDesde,",
-				"          VigenciaHasta,",
-				"          Estado",
-				"     )) ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}
