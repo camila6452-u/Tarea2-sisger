@@ -50,7 +50,6 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
 				"source1 derive(ParadaHistoricaId = upper(trim(ParadaHistoricaId)),",
-				"          ValidacionesTarjeta = iif(upper(trim(medicion)) == 'NO_MEDIDO', toInteger(null()), toInteger(trim(abordajes_manuales))),",
 				"          Descensos = toInteger(trim(Descensos)),",
 				"          DemandaNoAtendida = toInteger(trim(DemandaNoAtendida)),",
 				"          Metodo = upper(trim(Metodo))) ~> derivedColumn1",
