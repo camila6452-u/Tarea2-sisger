@@ -15,10 +15,24 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dw_silver_vehiculos_sql",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
 				}
 			],
 			"scriptLines": [
@@ -36,7 +50,33 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
-				"source1 derive() ~> derivedColumn1"
+				"source1 derive(Placa = upper(trim(Placa)),",
+				"          TipoVehiculo = upper(trim(TipoVehiculo)),",
+				"          CapacidadEfectiva = toInteger(trim(CapacidadEfectiva)),",
+				"          Estado = upper(trim(Estado))) ~> derivedColumn1",
+				"derivedColumn1 derive(VigenciaDesde = coalesce(toDate(trim(VigenciaDesde), 'dd/MM/yyyy'), toDate(trim(VigenciaDesde), 'yyyy-MM-dd')),",
+				"          VigenciaHasta = coalesce(toDate(trim(VigenciaHasta), 'dd/MM/yyyy'), toDate(trim(VigenciaHasta), 'yyyy-MM-dd'))) ~> derivedColumn2",
+				"derivedColumn2 derive(VehiculoId = concat('V-', lpad(regexReplace(trim(VehiculoId), '[^0-9]', ''), 3, '0'))) ~> derivedColumn3",
+				"derivedColumn3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          AnioFuente as integer,",
+				"          VehiculoId as string,",
+				"          Placa as string,",
+				"          TipoVehiculo as string,",
+				"          CapacidadEfectiva as integer,",
+				"          VigenciaDesde as date,",
+				"          VigenciaHasta as date,",
+				"          Estado as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}

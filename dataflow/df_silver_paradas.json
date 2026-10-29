@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "dw_bronze_paradas_sql",
+						"referenceName": "dw_silver_paradas_sql",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -63,15 +63,15 @@
 				"derivedColumn3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          AnioFuente as string,",
+				"          AnioFuente as integer,",
 				"          ParadaHistoricaId as string,",
 				"          CodigoPublicado as string,",
 				"          NombreParada as string,",
 				"          Zona as string,",
-				"          Latitud as string,",
-				"          Longitud as string,",
-				"          VigenciaDesde as string,",
-				"          VigenciaHasta as string,",
+				"          Latitud as decimal(9,6),",
+				"          Longitud as decimal(9,6),",
+				"          VigenciaDesde as date,",
+				"          VigenciaHasta as date,",
 				"          Estado as string",
 				"     ),",
 				"     deletable:false,",
