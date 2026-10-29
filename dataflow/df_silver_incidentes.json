@@ -19,6 +19,12 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
 				}
 			],
 			"scriptLines": [
@@ -37,7 +43,13 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
-				"source1 derive() ~> derivedColumn1"
+				"source1 derive(IncidenteId = upper(trim(IncidenteId)),",
+				"          AnioFuente = substring(trim(IncidenteId), 4, 4),",
+				"          TipoIncidente = upper(trim(TipoIncidente)),",
+				"          Severidad = upper(trim(Severidad)),",
+				"          Descripcion = trim(Descripcion)) ~> derivedColumn1",
+				"derivedColumn1 derive(VehiculoId = iif(isNull(VehiculoId) || trim(VehiculoId) == '', toString(null()), upper(trim(VehiculoId)))) ~> derivedColumn2",
+				"derivedColumn2 derive() ~> derivedColumn3"
 			]
 		}
 	}
