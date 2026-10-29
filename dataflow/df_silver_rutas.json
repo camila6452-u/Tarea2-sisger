@@ -33,6 +33,9 @@
 				},
 				{
 					"name": "derivedColumn3"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -59,7 +62,8 @@
 				"          Estado = upper(trim(Estado))) ~> derivedColumn2",
 				"derivedColumn2 derive(VigenciaDesde = coalesce(toDate(trim(VigenciaDesde), 'dd/MM/yyyy'), toDate(trim(VigenciaDesde), 'yyyy-MM-dd')),",
 				"          VigenciaHasta = coalesce(toDate(trim(VigenciaHasta), 'dd/MM/yyyy'), toDate(trim(VigenciaHasta), 'yyyy-MM-dd'))) ~> derivedColumn3",
-				"derivedColumn3 sink(allowSchemaDrift: true,",
+				"derivedColumn3 filter(!isNull(RutaHistoricaId) && trim(RutaHistoricaId) != '') ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          AnioFuente as integer,",

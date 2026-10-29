@@ -61,7 +61,7 @@
 				"          VehiculoId = concat('V-', lpad(regexReplace(trim(VehiculoId), '[^0-9]', ''), 3, '0')),",
 				"          RutaHistoricaId = concat('RH-', lpad(regexReplace(trim(RutaHistoricaId), '[^0-9]', ''), 2, '0'), iif(in([7, 12], toInteger(regexReplace(trim(RutaHistoricaId), '[^0-9]', ''))), '-OLD', '')),",
 				"          AnioFuente = concat('RH-', lpad(regexReplace(trim(RutaHistoricaId), '[^0-9]', ''), 2, '0'), iif(in([7, 12], toInteger(regexReplace(trim(RutaHistoricaId), '[^0-9]', ''))), '-OLD', ''))) ~> derivedColumn2",
-				"derivedColumn2 filter(instr(trim(ViajeId), '-') == 0 && !isNull(toString(byName('ValidacionesTarjeta')))) ~> filter1",
+				"derivedColumn2 filter(!isNull(ViajeId) && trim(ViajeId) != '') ~> filter1",
 				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
