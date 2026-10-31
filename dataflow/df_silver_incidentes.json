@@ -33,6 +33,9 @@
 				},
 				{
 					"name": "derivedColumn3"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -52,7 +55,7 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
 				"source1 derive(IncidenteId = upper(trim(IncidenteId)),",
-				"          AnioFuente = substring(trim(IncidenteId), 4, 4),",
+				"          AnioFuente = toInteger(AnioFuente),",
 				"          TipoIncidente = upper(trim(TipoIncidente)),",
 				"          Severidad = upper(trim(Severidad)),",
 				"          Descripcion = trim(Descripcion)) ~> derivedColumn1",
@@ -60,7 +63,8 @@
 				"derivedColumn2 derive(FechaHoraInicio = toTimestamp(trim(FechaHoraInicio), 'dd/MM/yyyy HH:mm'),",
 				"          FechaHoraFin = toTimestamp(trim(FechaHoraFin), 'dd/MM/yyyy HH:mm'),",
 				"          FechaHoraRegistro = coalesce(toDate(trim(FechaHoraRegistro), 'dd/MM/yyyy'), toDate(trim(FechaHoraRegistro), 'yyyy-MM-dd'))) ~> derivedColumn3",
-				"derivedColumn3 sink(allowSchemaDrift: true,",
+				"derivedColumn3 filter(!isNull(IncidenteId) && trim(IncidenteId) != '') ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          AnioFuente as integer,",
@@ -80,17 +84,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError',",
-				"     mapColumn(",
-				"          IncidenteId,",
-				"          TipoIncidente,",
-				"          Severidad,",
-				"          FechaHoraInicio,",
-				"          FechaHoraFin,",
-				"          FechaHoraRegistro,",
-				"          VehiculoId,",
-				"          Descripcion",
-				"     )) ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}
